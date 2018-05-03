@@ -34,11 +34,22 @@ router.route('/produtos')
   	product.save(function(error) {
   		if(error)
   			res.send("Erro ao salvar produto no banco" + error);
-  		
-  		res.json({message:"Produto inserido com sucesso."});
+		  
+		res.status(201).json({message:"Produto inserido com sucesso."});
   	});
+  })
 
-  });
+  .get(function(req, res) {
+	Product.find(function(err, prods){
+		if(err)
+			res.send(err);
+
+		res.status(200).json({
+			message: "retorno de todos os produtos",
+			allProducts:prods
+		});
+	});
+});
 
 app.use('/api', router);
 
